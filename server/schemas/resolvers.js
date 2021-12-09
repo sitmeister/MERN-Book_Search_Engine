@@ -45,21 +45,16 @@ const resolvers = {
         { new: true }
       );
 
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $addToSet: { thoughts: thought._id } }
-      );
-
-      return thought;
+      return updatedUser;
     }
     throw new AuthenticationError("You need to be logged in!");
   },
 
-  removeBook: async (parent, { bookData }, context) => {
+  removeBook: async (parent, { bookId }, context) => {
     if (context.user) {
-      const removedBook = await User.findOneAndDelete(
+      const removedBook = await User.findOneAndUpdate(
         { _id: context.user._id },
-        { $pull: { bookId } },
+        { $pull: { savedBooks: { bookId } } },
         { new: true }
       );
 
