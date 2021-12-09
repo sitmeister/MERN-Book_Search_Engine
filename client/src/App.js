@@ -34,18 +34,18 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const isLoggedIn = window.localStorage.getItem("authUser") ? true : false;
-
 function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-       <Navbar isLoggedIn={isLoggedIn} /> 
+        <>
+          <Navbar />
           <Switch>
             <Route exact path="/" component={SearchBooks} />
             <Route exact path="/saved" component={SavedBooks} />
             <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
           </Switch>
+        </>
       </Router>
     </ApolloProvider>
   );
